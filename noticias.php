@@ -12,7 +12,7 @@ $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
 
 // Consulta datos y recepciona una clave para consultar dichos datos con dicha clave
 if (isset($_GET["consultar"])){
-    $sqlNoticias = mysqli_query($conexionBD,"SELECT * FROM campo WHERE ID_CAMPO=".$_GET["consultar"]);
+    $sqlNoticias = mysqli_query($conexionBD,"SELECT * FROM noticia WHERE ID_NOTICIA=".$_GET["consultar"]);
     //$sqlEmpleaados = mysqli_query($conexionBD,"SELECT * FROM campo WHERE ID_CAMPO=1");
     if(mysqli_num_rows($sqlNoticias) > 0){
         $noticias = mysqli_fetch_all($sqlNoticias,MYSQLI_ASSOC);
@@ -23,7 +23,7 @@ if (isset($_GET["consultar"])){
 }
 //borrar pero se le debe de enviar una clave ( para borrado )
  if (isset($_GET["borrar"])){
-    $sqlNoticias = mysqli_query($conexionBD,"DELETE FROM campo WHERE ID_CAMPO=".$_GET["borrar"]);
+    $sqlNoticias = mysqli_query($conexionBD,"DELETE FROM noticia WHERE ID_NOTICIA=".$_GET["borrar"]);
     if($sqlNoticias){
         echo json_encode(["success"=>1]);
         exit();
@@ -33,13 +33,13 @@ if (isset($_GET["consultar"])){
 //Inserta un nuevo registro y recepciona en método post los datos de nombre y correo
 if(isset($_GET["insertar"])){
     $data = json_decode(file_get_contents("php://input"));
-    $nombre=$data->nombre;
-    $direccion=$data->direccion;
-    $tipo=$data->tipo;
+    $titulo=$data->titulo;
+    $descripcion=$data->descripcion;
+    $usuario=$data->usuario;
     
-        if(($direccion!="")&&($nombre!="")&&($tipo!="")){
+        if(($titulo!="")&&($descripcion!="")&&($usuario!="")){
             
-    $sqlNoticias = mysqli_query($conexionBD,"INSERT INTO campo(NOMBRE,DIRECCION,TIPO) VALUES('$nombre','$direccion','$tipo') ");
+    $sqlNoticias = mysqli_query($conexionBD,"INSERT INTO noticia(TITULO,DESCRIPCION,USUARIO) VALUES('$titulo','$descripcion','$usuario') ");
     echo json_encode(["success"=>1]);
         }
     exit();
@@ -50,17 +50,28 @@ if(isset($_GET["actualizar"])){
     $data = json_decode(file_get_contents("php://input"));
 
     $id=(isset($data->id))?$data->id:$_GET["actualizar"];
-    $nombre=$data->nombre;
-    $direccion=$data->direccion;
-    $tipo=$data->tipo;
+    $titulo=$data->titulo;
+    $descripcion=$data->descripcion;
     
-    $sqlNoticias = mysqli_query($conexionBD,"UPDATE campo SET NOMBRE='$nombre',DIRECCION='$direccion',TIPO='$tipo' WHERE ID_CAMPO='$id'");
+    
+    $sqlNoticias = mysqli_query($conexionBD,"UPDATE noticia SET TITULO='$titulo',DESCRIPCION='$descripcion' WHERE ID_NOTICIA='$id'");
     echo json_encode(["success"=>1]);
     exit();
 }
+
+if (isset($_GET["ultimo"])){
+    $sqlNoticias = mysqli_query($conexionBD,"SELECT * from noticia order by ID_NOTICIA DESC"
+    //$sqlEmpleaados = mysqli_query($conexionBD,"SELECT * FROM campo WHERE ID_CAMPO=1");
+    if(mysqli_num_rows($sqlNoticias) > 0){
+        $noticias = mysqli_fetch_all($sqlNoticias,MYSQLI_ASSOC);
+        echo json_encode($noticias);
+        exit();
+    }
+    else{  echo json_encode(["success"=>0]); }
+}
 // Consulta todos los registros de la tabla empleados
-$sqlNoticias = mysqli_query($conexionBD,"SELECT * FROM campo ");
-if(mysqli_num_rows($sqlEmpleaados) > 0){
+$sqlNoticias = mysqli_query($conexionBD,"SELECT * FROM noticia order by ID_NOTICIA DESC");
+if(mysqli_num_rows($sqlNoticias) > 0){
     $noticias = mysqli_fetch_all($sqlNoticias,MYSQLI_ASSOC);
     echo json_encode($noticias);
 }
