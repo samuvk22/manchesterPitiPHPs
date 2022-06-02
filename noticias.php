@@ -12,19 +12,19 @@ $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
 
 // Consulta datos y recepciona una clave para consultar dichos datos con dicha clave
 if (isset($_GET["consultar"])){
-    $sqlCampos = mysqli_query($conexionBD,"SELECT * FROM campo WHERE ID_CAMPO=".$_GET["consultar"]);
+    $sqlNoticias = mysqli_query($conexionBD,"SELECT * FROM campo WHERE ID_CAMPO=".$_GET["consultar"]);
     //$sqlEmpleaados = mysqli_query($conexionBD,"SELECT * FROM campo WHERE ID_CAMPO=1");
-    if(mysqli_num_rows($sqlCampos) > 0){
-        $campos = mysqli_fetch_all($sqlCampos,MYSQLI_ASSOC);
-        echo json_encode($campos);
+    if(mysqli_num_rows($sqlNoticias) > 0){
+        $noticias = mysqli_fetch_all($sqlNoticias,MYSQLI_ASSOC);
+        echo json_encode($noticias);
         exit();
     }
     else{  echo json_encode(["success"=>0]); }
 }
 //borrar pero se le debe de enviar una clave ( para borrado )
  if (isset($_GET["borrar"])){
-    $sqlCampos = mysqli_query($conexionBD,"DELETE FROM campo WHERE ID_CAMPO=".$_GET["borrar"]);
-    if($sqlCampos){
+    $sqlNoticias = mysqli_query($conexionBD,"DELETE FROM campo WHERE ID_CAMPO=".$_GET["borrar"]);
+    if($sqlNoticias){
         echo json_encode(["success"=>1]);
         exit();
     }
@@ -39,7 +39,7 @@ if(isset($_GET["insertar"])){
     
         if(($direccion!="")&&($nombre!="")&&($tipo!="")){
             
-    $sqlCampos = mysqli_query($conexionBD,"INSERT INTO campo(NOMBRE,DIRECCION,TIPO) VALUES('$nombre','$direccion','$tipo') ");
+    $sqlNoticias = mysqli_query($conexionBD,"INSERT INTO campo(NOMBRE,DIRECCION,TIPO) VALUES('$nombre','$direccion','$tipo') ");
     echo json_encode(["success"=>1]);
         }
     exit();
@@ -54,15 +54,15 @@ if(isset($_GET["actualizar"])){
     $direccion=$data->direccion;
     $tipo=$data->tipo;
     
-    $sqlCampos = mysqli_query($conexionBD,"UPDATE campo SET NOMBRE='$nombre',DIRECCION='$direccion',TIPO='$tipo' WHERE ID_CAMPO='$id'");
+    $sqlNoticias = mysqli_query($conexionBD,"UPDATE campo SET NOMBRE='$nombre',DIRECCION='$direccion',TIPO='$tipo' WHERE ID_CAMPO='$id'");
     echo json_encode(["success"=>1]);
     exit();
 }
 // Consulta todos los registros de la tabla empleados
-$sqlCampos = mysqli_query($conexionBD,"SELECT * FROM campo ");
-if(mysqli_num_rows($sqlCampos) > 0){
-    $campos = mysqli_fetch_all($sqlCampos,MYSQLI_ASSOC);
-    echo json_encode($campos);
+$sqlNoticias = mysqli_query($conexionBD,"SELECT * FROM campo ");
+if(mysqli_num_rows($sqlEmpleaados) > 0){
+    $noticias = mysqli_fetch_all($sqlNoticias,MYSQLI_ASSOC);
+    echo json_encode($noticias);
 }
 else{ echo json_encode([["success"=>0]]); }
 
