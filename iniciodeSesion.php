@@ -11,8 +11,12 @@ $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
 
 
 
-
-
+$sqlUsuarios = mysqli_query($conexionBD,"SELECT * FROM usuario ");
+if(mysqli_num_rows($sqlUsuarios) > 0){
+    $usuarios = mysqli_fetch_all($sqlUsuarios,MYSQLI_ASSOC);
+    echo json_encode($usuarios);
+}
+else{ echo json_encode([["success"=>0]]); }
 
 
 
