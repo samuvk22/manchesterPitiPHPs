@@ -10,6 +10,8 @@ $servidor = "localhost"; $usuario = "root"; $contrasenia = ""; $nombreBaseDatos 
 $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
 
 
+
+
 // Consulta datos y recepciona una clave para consultar dichos datos con dicha clave
 if (isset($_GET["consultar"])){
     $sqlNoticias = mysqli_query($conexionBD,"SELECT * FROM noticia WHERE ID_NOTICIA=".$_GET["consultar"]);
@@ -59,16 +61,6 @@ if(isset($_GET["actualizar"])){
     exit();
 }
 
-if (isset($_GET["ultimo"])){
-    $sqlNoticias = mysqli_query($conexionBD,"SELECT * from noticia order by ID_NOTICIA DESC"
-    //$sqlEmpleaados = mysqli_query($conexionBD,"SELECT * FROM campo WHERE ID_CAMPO=1");
-    if(mysqli_num_rows($sqlNoticias) > 0){
-        $noticias = mysqli_fetch_all($sqlNoticias,MYSQLI_ASSOC);
-        echo json_encode($noticias);
-        exit();
-    }
-    else{  echo json_encode(["success"=>0]); }
-}
 // Consulta todos los registros de la tabla empleados
 $sqlNoticias = mysqli_query($conexionBD,"SELECT * FROM noticia order by ID_NOTICIA DESC");
 if(mysqli_num_rows($sqlNoticias) > 0){
