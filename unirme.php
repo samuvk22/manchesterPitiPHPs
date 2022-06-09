@@ -15,7 +15,7 @@ $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
     $posicion=$data->posicion;
 
 
-    $para      = 'gilsamuel685@gmail.com';
+    $para      = 'manchesterpitifc@gmail.com';
     $asunto    = 'El asunto del correo';
     $descripcion   = 'Este es el cuerpo del correo';
     $de = 'gilsamuel685@gmail.com';
