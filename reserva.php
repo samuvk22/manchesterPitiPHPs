@@ -28,10 +28,12 @@
         $fecha=$data->fecha;
         $hora=$data->hora;
         $usuario=$data->usuario;
+
+        $horayfecha = $fecha ." " .$hora;
         
             if(($idcampo!="")&&($usuario!="")&&($fecha!="")&&($hora!="")){
                 
-        $sqlReservas = mysqli_query($conexionBD,"INSERT INTO reserva (`ID_CAMPO`, `USUARIO`, `HORA`) VALUES ('10', 'usuario', '2022-06-08 17:38:45.000000')");
+        $sqlReservas = mysqli_query($conexionBD,"INSERT INTO reserva (`ID_CAMPO`, `USUARIO`, `HORA`) VALUES ('$idcampo', '$usuario', '$horayfecha')");
         echo json_encode(["success"=>1]);
             }
         exit();
