@@ -9,22 +9,25 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $servidor = "localhost"; $usuario = "root"; $contrasenia = ""; $nombreBaseDatos = "manchesterpitifc";
 $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
 
-
-
-
-if(isset($_GET["insertar"])){
     $data = json_decode(file_get_contents("php://input"));
-    $usuario=$data->usuario;
-    $contraseña=$data->contraseña;
+    $nombre=$data->nombre;
+    $correo=$data->correo;
+    $posicion=$data->posicion;
+
+
+    $para      = 'manchesterpitifc@gmail.com';
+    $asunto    = 'El asunto del correo';
+    $descripcion   = 'Este es el cuerpo del correo';
+    $de = 'gilsamuel685@gmail.com';
+
+    mail($para, $asunto, $descripcion, $de);
     
-    
-        if(($usuario!="")&&($contraseña!="")){
-            
-    $sqlUsuarios = mysqli_query($conexionBD,"INSERT INTO usuario(USUARIO,CONTRASEÑA,ROL) VALUES('$usuario','$contraseña','usuario') ");
+
+
     echo json_encode(["success"=>1]);
-        }
+
     exit();
-}
+        // El mensaje
 
 
 
