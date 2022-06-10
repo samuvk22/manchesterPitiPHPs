@@ -10,6 +10,8 @@ $servidor = "localhost"; $usuario = "root"; $contrasenia = ""; $nombreBaseDatos 
 $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
 
 
+
+
 // Consulta datos y recepciona una clave para consultar dichos datos con dicha clave
 if (isset($_GET["consultar"])){
     $sqlPlantilla = mysqli_query($conexionBD,"SELECT * FROM jugador WHERE ID_JUGADOR=".$_GET["consultar"]);
@@ -36,10 +38,11 @@ if(isset($_GET["insertar"])){
     $nombre=$data->nombre;
     $apellidos=$data->apellidos;
     $numero=$data->numero;
+    $imagen=$data->imagen;
     
-        if(($nombre!="")&&($apellidos!="")&&($dorsal!="")){
+        if(($nombre!="")&&($apellidos!="")&&($numero!="")){
             
-    $sqlPlantilla = mysqli_query($conexionBD,"INSERT INTO plantilla(NOMBRE,APELLIDOS,NUMERO) VALUES('$nombre','$apellidos','$numero') ");
+    $sqlPlantilla = mysqli_query($conexionBD,"INSERT INTO jugador(NOMBRE,APELLIDOS,NUMERO) VALUES('$nombre','$apellidos','$numero') ");
     echo json_encode(["success"=>1]);
         }
     exit();
@@ -53,25 +56,16 @@ if(isset($_GET["actualizar"])){
     $nombre=$data->nombre;
     $apellidos=$data->apellidos;
     $numero=$data->numero;
+    $imagen=$data->imagen;
     
     
-    $sqlPlantilla = mysqli_query($conexionBD,"UPDATE plantilla SET NOMBRE='$titulo',APELLIDOS='$descripcion',NUMERO='$numero' WHERE ID_JUGADOR='$id'");
+    $sqlPlantilla = mysqli_query($conexionBD,"UPDATE jugador SET NOMBRE='$nombre',APELLIDOS='$apellidos',NUMERO='$numero',imagen='$imagen' WHERE ID_JUGADOR='$id'");
     echo json_encode(["success"=>1]);
     exit();
 }
 
-if (isset($_GET["ultimo"])){
-    $sqlPlantilla = mysqli_query($conexionBD,"SELECT * from plantilla order by ID_JUGADOR DESC"
-    //$sqlEmpleaados = mysqli_query($conexionBD,"SELECT * FROM campo WHERE ID_CAMPO=1");
-    if(mysqli_num_rows($sqlPlantilla) > 0){
-        $plantilla = mysqli_fetch_all($sqlPlantilla,MYSQLI_ASSOC);
-        echo json_encode($plantilla);
-        exit();
-    }
-    else{  echo json_encode(["success"=>0]); }
-}
 // Consulta todos los registros de la tabla empleados
-$sqlPlantilla = mysqli_query($conexionBD,"SELECT * FROM plantilla order by ID_JUGADOR DESC");
+$sqlPlantilla = mysqli_query($conexionBD,"SELECT * FROM jugador order by ID_JUGADOR DESC");
 if(mysqli_num_rows($sqlPlantilla) > 0){
     $plantilla = mysqli_fetch_all($sqlPlantilla,MYSQLI_ASSOC);
     echo json_encode($plantilla);
