@@ -39,4 +39,12 @@
         exit();
     }
 
+
+    $sqlReservas = mysqli_query($conexionBD,"SELECT * FROM reserva ");
+    if(mysqli_num_rows($sqlReservas) > 0){
+        $reservas = mysqli_fetch_all($sqlReservas,MYSQLI_ASSOC);
+        echo json_encode($reservas);
+    }
+    else{ echo json_encode([["success"=>0]]); }
+
 ?>
