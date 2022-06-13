@@ -32,7 +32,7 @@ if (isset($_GET["consultar"])){
     }
     else{  echo json_encode(["success"=>0]); }
 } 
-//Inserta un nuevo registro y recepciona en método post los datos de nombre y correo
+
 if(isset($_GET["insertar"])){
     $data = json_decode(file_get_contents("php://input"));
     $nombre=$data->nombre;
