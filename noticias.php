@@ -38,10 +38,13 @@ if(isset($_GET["insertar"])){
     $titulo=$data->titulo;
     $descripcion=$data->descripcion;
     $usuario=$data->usuario;
+    $imagen=$data->imagen;
+    $imagen = substr($imagen,11);
+    $imagen = "./assets/" . $imagen;
     
         if(($titulo!="")&&($descripcion!="")&&($usuario!="")){
             
-    $sqlNoticias = mysqli_query($conexionBD,"INSERT INTO noticia(TITULO,DESCRIPCION,USUARIO) VALUES('$titulo','$descripcion','$usuario') ");
+    $sqlNoticias = mysqli_query($conexionBD,"INSERT INTO noticia(TITULO,DESCRIPCION,USUARIO,imagen) VALUES('$titulo','$descripcion','$usuario','$imagen') ");
     echo json_encode(["success"=>1]);
         }
     exit();

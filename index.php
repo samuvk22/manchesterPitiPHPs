@@ -36,10 +36,14 @@ if(isset($_GET["insertar"])){
     $nombre=$data->nombre;
     $direccion=$data->direccion;
     $tipo=$data->tipo;
+    $imagen=$data->imagen;
+    $imagen = substr($imagen,11);
+    $imagen = "./assets/" . $imagen;
+    
     
         if(($direccion!="")&&($nombre!="")&&($tipo!="")){
             
-    $sqlCampos = mysqli_query($conexionBD,"INSERT INTO campo(NOMBRE,DIRECCION,TIPO) VALUES('$nombre','$direccion','$tipo') ");
+    $sqlCampos = mysqli_query($conexionBD,"INSERT INTO campo(NOMBRE,DIRECCION,TIPO,imagen) VALUES('$nombre','$direccion','$tipo','$imagen') ");
     echo json_encode(["success"=>1]);
         }
     exit();
