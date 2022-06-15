@@ -38,7 +38,7 @@ if(isset($_GET["insertar"])){
     $nombre=$data->nombre;
     $apellidos=$data->apellidos;
     $numero=$data->numero;
-    $imagen=$data->imagen;
+    
     
         if(($nombre!="")&&($apellidos!="")&&($numero!="")){
             
@@ -56,16 +56,16 @@ if(isset($_GET["actualizar"])){
     $nombre=$data->nombre;
     $apellidos=$data->apellidos;
     $numero=$data->numero;
-    $imagen=$data->imagen;
     
     
-    $sqlPlantilla = mysqli_query($conexionBD,"UPDATE jugador SET NOMBRE='$nombre',APELLIDOS='$apellidos',NUMERO='$numero',imagen='$imagen' WHERE ID_JUGADOR='$id'");
+    
+    $sqlPlantilla = mysqli_query($conexionBD,"UPDATE jugador SET NOMBRE='$nombre',APELLIDOS='$apellidos',NUMERO='$numero' WHERE ID_JUGADOR='$id'");
     echo json_encode(["success"=>1]);
     exit();
 }
 
 // Consulta todos los registros de la tabla empleados
-$sqlPlantilla = mysqli_query($conexionBD,"SELECT * FROM jugador order by ID_JUGADOR DESC");
+$sqlPlantilla = mysqli_query($conexionBD,"SELECT jugador.ID_JUGADOR, jugador.NOMBRE as nombrejugador, APELLIDOS, NUMERO, posicon.NOMBRE AS nombreposicion, DESCRIPCION  from jugador,jugador_posicion,posicon Where jugador.ID_JUGADOR = jugador_posicion.ID_JUGADOR and posicon.ID_POSICION = jugador_posicion.ID_POSICION order by nombreposicion;");
 if(mysqli_num_rows($sqlPlantilla) > 0){
     $plantilla = mysqli_fetch_all($sqlPlantilla,MYSQLI_ASSOC);
     echo json_encode($plantilla);

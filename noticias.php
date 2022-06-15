@@ -11,6 +11,18 @@ $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
 
 
 
+if (isset($_GET["obtener"])){
+
+    $sqlCampos = mysqli_query($conexionBD,"SELECT * from noticia where USUARIO='".$_GET["obtener"]."' ORDER BY ID_NOTICIA DESC");
+    //$sqlEmpleaados = mysqli_query($conexionBD,"SELECT * FROM campo WHERE ID_CAMPO=1");
+    if(mysqli_num_rows($sqlCampos) > 0){
+        $campos = mysqli_fetch_all($sqlCampos,MYSQLI_ASSOC);
+        echo json_encode($campos);
+        exit();
+    }
+    else{  echo json_encode(["success"=>0]); }
+}
+
 
 // Consulta datos y recepciona una clave para consultar dichos datos con dicha clave
 if (isset($_GET["consultar"])){

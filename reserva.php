@@ -10,6 +10,17 @@
     $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
 
 
+    if (isset($_GET["obtener"])){
+        
+        $sqlCampos = mysqli_query($conexionBD,"SELECT * from reserva, campo, usuario where reserva.ID_CAMPO = campo.ID_CAMPO and reserva.USUARIO = usuario.USUARIO and usuario.USUARIO ='".$_GET["obtener"]."'");
+        //$sqlEmpleaados = mysqli_query($conexionBD,"SELECT * FROM campo WHERE ID_CAMPO=1");
+        if(mysqli_num_rows($sqlCampos) > 0){
+            $campos = mysqli_fetch_all($sqlCampos,MYSQLI_ASSOC);
+            echo json_encode($campos);
+            exit();
+        }
+        else{  echo json_encode(["success"=>0]); }
+    }
 
     if (isset($_GET["consultar"])){
         $sqlCampos = mysqli_query($conexionBD,"SELECT * FROM campo WHERE ID_CAMPO=".$_GET["consultar"]);
@@ -38,6 +49,15 @@
             }
         exit();
     }
+
+    if (isset($_GET["borrar"])){
+        $sqlCampos = mysqli_query($conexionBD,"DELETE FROM reserva WHERE ID_RESERVA=".$_GET["borrar"]);
+        if($sqlCampos){
+            echo json_encode(["success"=>1]);
+            exit();
+        }
+        else{  echo json_encode(["success"=>0]); }
+    } 
 
 
     $sqlReservas = mysqli_query($conexionBD,"SELECT * FROM reserva ");
